@@ -8,9 +8,10 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('components.layouts.app')]
-#[Title('Tarik Saldo')]
-new class extends Component {
+return new
+    #[Layout('layouts::app')]
+    #[Title('Cari Guru Les Private')]
+    class extends Component {
     public $amount;
     public $bank_name;
     public $account_number;

@@ -13,9 +13,10 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Layout('components.layouts.app')]
-#[Title('Booking Les Private')]
-new class extends Component {
+return new
+    #[Layout('layouts::app')]
+    #[Title('Cari Guru Les Private')]
+    class extends Component {
     use WithFileUploads;
 
     public Tutor $tutor;

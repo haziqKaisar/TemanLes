@@ -9,9 +9,10 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Layout('components.layouts.app')]
-#[Title('ACC Penarikan Saldo Guru')]
-new class extends Component {
+return new
+    #[Layout('layouts::app')]
+    #[Title('Cari Guru Les Private')]
+    class extends Component {
     use WithPagination;
 
     public string $filterStatus = 'pending';

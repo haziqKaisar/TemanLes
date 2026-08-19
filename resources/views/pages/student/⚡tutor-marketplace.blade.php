@@ -6,20 +6,17 @@ use App\Models\Tutor;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Layout('components.layouts.app')]
-#[Title('Cari Guru Les Private')]
-new class extends Component {
+return new
+    #[Layout('layouts::app')]
+    #[Title('Cari Guru Les Private')]
+    class extends Component {
     use WithPagination;
 
-    #[Url]
     public $subject_id = '';
-    #[Url]
     public $level = '';
-    #[Url]
     public $mode = '';
     public $min_price = '';
     public $max_price = '';
@@ -59,16 +56,12 @@ new class extends Component {
         return Subject::orderBy('name')->get();
     }
 };
-
 ?>
-
 <div>
     <div class="mb-8">
         <h1 class="text-2xl font-bold mb-1">Cari Guru Les Private</h1>
         <p class="text-slate-500 text-sm">Temukan guru terbaik sesuai kebutuhan belajarmu</p>
     </div>
-
-    {{-- Filter Bar --}}
     <div class="bg-white rounded-2xl border border-slate-100 p-4 mb-6 grid grid-cols-1 md:grid-cols-5 gap-3">
         <select wire:model.live="subject_id" class="rounded-lg border-slate-300 text-sm">
             <option value="">Semua Mapel</option>
@@ -76,25 +69,20 @@ new class extends Component {
                 <option value="{{ $subject->id }}">{{ $subject->name }}</option>
             @endforeach
         </select>
-
         <select wire:model.live="level" class="rounded-lg border-slate-300 text-sm">
             <option value="">Semua Jenjang</option>
             @foreach(['SD', 'SMP', 'SMA', 'Umum'] as $lvl)
                 <option value="{{ $lvl }}">{{ $lvl }}</option>
             @endforeach
         </select>
-
         <select wire:model.live="mode" class="rounded-lg border-slate-300 text-sm">
             <option value="">Semua Mode</option>
             <option value="online">Online</option>
             <option value="offline">Tatap Muka</option>
         </select>
-
         <input type="number" wire:model.live.debounce.500ms="min_price" placeholder="Harga min" class="rounded-lg border-slate-300 text-sm">
         <input type="number" wire:model.live.debounce.500ms="max_price" placeholder="Harga max" class="rounded-lg border-slate-300 text-sm">
     </div>
-
-    {{-- Grid Guru --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         @forelse($this->tutors as $tutor)
             <div wire:key="tutor-{{ $tutor->id }}" class="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-md transition">
@@ -107,18 +95,15 @@ new class extends Component {
                         <p class="text-xs text-slate-500">{{ $tutor->headline }}</p>
                     </div>
                 </div>
-
                 <div class="flex items-center gap-1 text-amber-500 text-sm mb-3">
                     ⭐ {{ number_format($tutor->rating_avg, 1) }}
                     <span class="text-slate-400">({{ $tutor->rating_count }} ulasan)</span>
                 </div>
-
                 <div class="flex flex-wrap gap-1.5 mb-4">
                     @foreach($tutor->tutorSubjects->take(3) as $ts)
                         <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">{{ $ts->subject->name }} · {{ $ts->level }}</span>
                     @endforeach
                 </div>
-
                 <a href="{{ route('booking.wizard', $tutor) }}" class="block text-center bg-indigo-600 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-indigo-700">
                     Lihat & Booking
                 </a>
@@ -127,6 +112,5 @@ new class extends Component {
             <div class="col-span-3 text-center py-16 text-slate-400">Belum ada guru yang cocok dengan filter kamu.</div>
         @endforelse
     </div>
-
     <div class="mt-6">{{ $this->tutors->links() }}</div>
 </div>
