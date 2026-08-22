@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Teacher\WithdrawController;
 use App\Http\Controllers\TutorMarketplaceController;
+use App\Http\Controllers\Teacher\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TutorMarketplaceController::class, 'index'])->name('home');
@@ -59,7 +60,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
         $orders = $tutor?->orders()->with('student')->latest()->paginate(10);
         return view('teacher.dashboard', compact('tutor', 'wallet', 'orders'));
     })->name('dashboard');
-
+    Route::post('/orders/{order}/complete', [OrderController::class, 'complete'])->name('orders.complete');
     Route::get('/withdraw', [WithdrawController::class, 'create'])->name('withdraw');
     Route::post('/withdraw', [WithdrawController::class, 'store'])->name('withdraw.store');
 });

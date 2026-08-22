@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Auth;
 class BookingController extends Controller
 {
     public function step1(Tutor $tutor)
-    {
-        abort_unless($tutor->verification_status === 'verified', 404);
-        $subjects = $tutor->tutorSubjects()->where('is_active', true)->with('subject')->get();
-        return view('booking.step1', compact('tutor', 'subjects'));
-    }
+{
+    abort_unless($tutor->verification_status === 'verified', 404);
+    $subjects = $tutor->tutorSubjects()->where('is_active', true)->with('subject')->get();
+    $availabilities = $tutor->availabilities()->where('is_active', true)->orderBy('day_of_week')->get();
+
+    return view('booking.step1', compact('tutor', 'subjects', 'availabilities'));
+}
 
     public function storeStep1(Request $request, Tutor $tutor)
     {

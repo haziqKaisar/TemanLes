@@ -34,6 +34,7 @@
                     <th class="px-4 py-3">Jadwal</th>
                     <th class="px-4 py-3">Mode</th>
                     <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
@@ -47,15 +48,30 @@
                             <span @class([
                                 'px-2 py-1 rounded-full text-xs font-medium',
                                 'bg-amber-100 text-amber-700' => in_array($order->status, ['pending_payment', 'waiting_verification']),
-                                'bg-emerald-100 text-emerald-700' => in_array($order->status, ['confirmed', 'completed']),
+                                'bg-blue-100 text-blue-700' => $order->status === 'confirmed',
+                                'bg-emerald-100 text-emerald-700' => $order->status === 'completed',
                                 'bg-red-100 text-red-700' => in_array($order->status, ['cancelled', 'rejected']),
                             ])>
                                 {{ ucfirst(str_replace('_', ' ', $order->status)) }}
                             </span>
                         </td>
+                        <td class="px-4 py-3">
+                            @if($order->status === 'confirmed')
+                                <form method="POST" action="{{ route('teacher.orders.complete', $order) }}" onsubmit="return confirm('Konfirmasi bahwa les sudah selesai dilaksanakan? Dana akan langsung masuk ke saldo kamu.')">
+                                    @csrf
+                                    <button type="submit" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-emerald-700">
+                                        Tandai Selesai
+                                    </button>
+                                </form>
+                            @elseif($order->status === 'completed')
+                                <span class="text-emerald-600 text-xs">✓ Rp {{ number_format($order->tutor_earning_amount, 0, ',', '.') }} masuk saldo</span>
+                            @else
+                                <span class="text-slate-400 text-xs">-</span>
+                            @endif
+                        </td>
                     </tr>
                 @empty
-                    <tr><td colspan="5" class="px-4 py-8 text-center text-slate-400">Belum ada jadwal mengajar.</td></tr>
+                    <tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Belum ada jadwal mengajar.</td></tr>
                 @endforelse
             </tbody>
         </table>

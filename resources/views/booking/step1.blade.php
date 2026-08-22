@@ -11,6 +11,26 @@
                 </div>
             </div>
 
+            @if($availabilities->isNotEmpty())
+    <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-5 text-sm">
+        <p class="font-medium text-indigo-700 mb-2">📅 Jadwal Ketersediaan Guru</p>
+        <div class="flex flex-wrap gap-2">
+            @php
+                $hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            @endphp
+            @foreach($availabilities as $a)
+                <span class="bg-white border border-indigo-200 text-indigo-700 px-3 py-1 rounded-full text-xs">
+                    {{ $hari[$a->day_of_week] }}: {{ \Carbon\Carbon::parse($a->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($a->end_time)->format('H:i') }}
+                </span>
+            @endforeach
+        </div>
+    </div>
+@else
+    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-5 text-sm text-amber-700">
+        ⚠️ Guru ini belum mengatur jadwal ketersediaan. Booking mungkin tidak akan berhasil.
+    </div>
+@endif
+
             <form method="POST" action="{{ route('booking.step1.store', $tutor) }}" class="space-y-5">
                 @csrf
 
