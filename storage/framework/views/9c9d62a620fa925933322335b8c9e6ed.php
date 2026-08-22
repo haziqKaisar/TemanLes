@@ -1,34 +1,57 @@
 <?php if (isset($component)) { $__componentOriginal5863877a5171c196453bfa0bd807e410 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal5863877a5171c196453bfa0bd807e410 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Booking - Mode & Lokasi']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Mode & Lokasi — TemanLes']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('layouts.app'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => 'Booking - Mode & Lokasi']); ?>
-    <div class="max-w-3xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-            <form method="POST" action="<?php echo e(route('booking.step2.store', $tutor)); ?>" id="step2-form" class="space-y-5">
+<?php $component->withAttributes(['title' => 'Mode & Lokasi — TemanLes']); ?>
+    <div class="max-w-2xl mx-auto">
+        <?php if (isset($component)) { $__componentOriginale91995af3ce42fe38ee3d3f5bfa23634 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale91995af3ce42fe38ee3d3f5bfa23634 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.booking-stepper','data' => ['current' => 2]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('booking-stepper'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['current' => 2]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale91995af3ce42fe38ee3d3f5bfa23634)): ?>
+<?php $attributes = $__attributesOriginale91995af3ce42fe38ee3d3f5bfa23634; ?>
+<?php unset($__attributesOriginale91995af3ce42fe38ee3d3f5bfa23634); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale91995af3ce42fe38ee3d3f5bfa23634)): ?>
+<?php $component = $__componentOriginale91995af3ce42fe38ee3d3f5bfa23634; ?>
+<?php unset($__componentOriginale91995af3ce42fe38ee3d3f5bfa23634); ?>
+<?php endif; ?>
+
+        <div class="bg-white border border-line rounded-2xl p-6">
+            <form method="POST" action="<?php echo e(route('booking.step2.store', $tutor)); ?>" class="space-y-5">
                 <?php echo csrf_field(); ?>
 
-                <div>
-                    <label class="block text-sm font-medium mb-1.5">Mode Belajar</label>
+                <fieldset>
+                    <legend class="block text-sm font-medium text-ink mb-1.5">Cara belajar</legend>
                     <div class="grid grid-cols-2 gap-3">
                         <?php if(in_array($tutor->teaching_mode, ['online', 'both'])): ?>
                             <label>
                                 <input type="radio" name="teaching_mode" value="online" class="sr-only peer" onchange="toggleLocation(false)" <?php if(old('teaching_mode') == 'online'): echo 'checked'; endif; ?>>
-                                <div class="text-center py-3 rounded-lg border border-slate-300 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 cursor-pointer text-sm font-medium">
-                                    💻 Online
+                                <div class="flex items-center justify-center gap-2 py-3.5 rounded-lg border border-line peer-checked:border-board peer-checked:bg-board/8 peer-checked:text-board peer-focus-visible:ring-2 peer-focus-visible:ring-board cursor-pointer text-sm font-medium text-ink transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2h-3l1 2H8l1-2H6a2 2 0 01-2-2V5z"/></svg>
+                                    Online
                                 </div>
                             </label>
                         <?php endif; ?>
                         <?php if(in_array($tutor->teaching_mode, ['offline', 'both'])): ?>
                             <label>
                                 <input type="radio" name="teaching_mode" value="offline" class="sr-only peer" onchange="toggleLocation(true)" <?php if(old('teaching_mode') == 'offline'): echo 'checked'; endif; ?>>
-                                <div class="text-center py-3 rounded-lg border border-slate-300 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 cursor-pointer text-sm font-medium">
-                                    📍 Tatap Muka (Offline)
+                                <div class="flex items-center justify-center gap-2 py-3.5 rounded-lg border border-line peer-checked:border-board peer-checked:bg-board/8 peer-checked:text-board peer-focus-visible:ring-2 peer-focus-visible:ring-board cursor-pointer text-sm font-medium text-ink transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 2a6 6 0 016 6c0 4.5-6 10-6 10S4 12.5 4 8a6 6 0 016-6zm0 8a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                    Tatap muka
                                 </div>
                             </label>
                         <?php endif; ?>
@@ -37,62 +60,65 @@
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <p class="text-red-500 text-xs mt-1"><?php echo e($message); ?></p> <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs mt-1.5"><?php echo e($message); ?></p> <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                </div>
+                </fieldset>
 
-                <div id="location-section" class="hidden">
-                    <label class="block text-sm font-medium mb-1.5">Tentukan Titik Lokasi di Peta</label>
-                    <p class="text-xs text-slate-500 mb-2">Klik pada peta atau geser marker untuk menandai lokasi pertemuan.</p>
+                <div id="location-section" class="hidden space-y-4">
+                    <div class="bg-paper-alt/50 border border-dashed border-line rounded-lg p-3 text-xs text-ink-muted">
+                        Klik pada peta atau geser penanda untuk menandai lokasi pertemuan.
+                    </div>
 
-                    <div id="map-picker" class="w-full h-72 rounded-lg border border-slate-300"></div>
-
-                    <button type="button" onclick="locateMe()" class="mt-2 text-xs text-indigo-600 hover:underline">
-                        📍 Gunakan lokasi saya saat ini
-                    </button>
+                    <div>
+                        <div id="map-picker" class="w-full h-64 rounded-lg border border-line" role="application" aria-label="Peta pemilih lokasi"></div>
+                        <button type="button" onclick="locateMe()" class="mt-2 flex items-center gap-1.5 text-xs text-board font-medium hover:text-board-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board rounded px-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.06a5.002 5.002 0 00-3.94 3.94H4a1 1 0 100 2h.06a5.002 5.002 0 003.94 3.94V15a1 1 0 102 0v-.06a5.002 5.002 0 003.94-3.94H15a1 1 0 100-2h-.06A5.002 5.002 0 0011 5.06V5zm-1 8a3 3 0 110-6 3 3 0 010 6z" clip-rule="evenodd"/></svg>
+                            Gunakan lokasi saya saat ini
+                        </button>
+                    </div>
 
                     <input type="hidden" name="location_lat" id="location_lat">
                     <input type="hidden" name="location_lng" id="location_lng">
 
-                    <div class="mt-3">
-                        <label class="block text-sm font-medium mb-1.5">Alamat Lengkap</label>
-                        <textarea name="location_address" id="location_address" rows="2"
-                            class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500"
-                            placeholder="Alamat akan terisi otomatis, silakan sesuaikan jika perlu"><?php echo e(old('location_address')); ?></textarea>
+                    <div>
+                        <label for="location_address" class="block text-sm font-medium text-ink mb-1.5">Alamat lengkap</label>
+                        <textarea id="location_address" name="location_address" rows="2"
+                            class="w-full rounded-lg border border-line px-3 py-2.5 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board"
+                            placeholder="Terisi otomatis dari peta, sesuaikan bila perlu"><?php echo e(old('location_address')); ?></textarea>
                         <?php $__errorArgs = ['location_address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <p class="text-red-500 text-xs mt-1"><?php echo e($message); ?></p> <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs mt-1.5"><?php echo e($message); ?></p> <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="mt-3">
-                        <label class="block text-sm font-medium mb-1.5">Patokan / Catatan Lokasi (opsional)</label>
-                        <input type="text" name="location_note" value="<?php echo e(old('location_note')); ?>"
-                            class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500"
-                            placeholder="Contoh: Rumah cat hijau sebelah minimarket">
+                    <div>
+                        <label for="location_note" class="block text-sm font-medium text-ink mb-1.5">Patokan <span class="text-ink-muted font-normal">(opsional)</span></label>
+                        <input id="location_note" type="text" name="location_note" value="<?php echo e(old('location_note')); ?>"
+                            class="w-full rounded-lg border border-line px-3 py-2.5 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board"
+                            placeholder="Contoh: rumah cat hijau sebelah minimarket">
                     </div>
 
                     <?php $__errorArgs = ['location_lat'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <p class="text-red-500 text-xs mt-1">Silakan tandai titik lokasi pada peta.</p> <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs">Silakan tandai titik lokasi pada peta.</p> <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <div class="flex gap-3">
-                    <a href="<?php echo e(route('booking.step1', $tutor)); ?>" class="flex-1 text-center border border-slate-300 rounded-lg py-3 font-medium hover:bg-slate-50">
+                <div class="flex gap-3 pt-2">
+                    <a href="<?php echo e(route('booking.step1', $tutor)); ?>" class="flex-1 text-center border border-line rounded-lg py-3.5 font-medium text-ink hover:bg-paper-alt transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board">
                         Kembali
                     </a>
-                    <button type="submit" class="flex-1 bg-indigo-600 text-white rounded-lg py-3 font-medium hover:bg-indigo-700">
+                    <button type="submit" class="flex-1 bg-board text-white rounded-lg py-3.5 font-medium hover:bg-board-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2">
                         Lanjutkan
                     </button>
                 </div>
@@ -114,21 +140,14 @@ unset($__errorArgs, $__bag); ?>
         }
 
         function initMap() {
-            const startLat = -6.5971;
-            const startLng = 106.8060;
-
+            const startLat = -6.5971, startLng = 106.8060;
             map = L.map('map-picker').setView([startLat, startLng], 14);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
-
             marker = L.marker([startLat, startLng], { draggable: true }).addTo(map);
-
             marker.on('dragend', (e) => setLocation(e.target.getLatLng()));
-            map.on('click', (e) => {
-                marker.setLatLng(e.latlng);
-                setLocation(e.latlng);
-            });
+            map.on('click', (e) => { marker.setLatLng(e.latlng); setLocation(e.latlng); });
         }
 
         function locateMe() {
@@ -144,17 +163,13 @@ unset($__errorArgs, $__bag); ?>
         async function setLocation(latlng) {
             document.getElementById('location_lat').value = latlng.lat;
             document.getElementById('location_lng').value = latlng.lng;
-
             try {
                 const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}`);
                 const data = await res.json();
-                if (data?.display_name) {
-                    document.getElementById('location_address').value = data.display_name;
-                }
+                if (data?.display_name) document.getElementById('location_address').value = data.display_name;
             } catch (e) {}
         }
 
-        // Kalau sebelumnya user sudah pilih offline (misal validasi gagal & balik ke sini), buka otomatis
         <?php if(old('teaching_mode') === 'offline'): ?>
             toggleLocation(true);
         <?php endif; ?>

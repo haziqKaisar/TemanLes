@@ -3,52 +3,75 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo e($title ?? 'Marketplace Guru Les Private'); ?></title>
+    <title><?php echo e($title ?? 'TemanLes'); ?></title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="<?php echo e(route('home')); ?>" class="font-bold text-lg text-indigo-600">
-                Guru<span class="text-slate-800">Les</span>
+<body class="bg-paper text-ink antialiased">
+
+    <a href="#konten" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-board focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-medium">
+        Lewati ke konten utama
+    </a>
+
+    <nav class="bg-paper border-b border-line sticky top-0 z-40" aria-label="Navigasi utama">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2 font-display font-semibold text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
+                <span class="inline-block w-2 h-2 rounded-full bg-mark" aria-hidden="true"></span>
+                Teman<span class="text-board">Les</span>
             </a>
-            <div class="flex items-center gap-4 text-sm">
+
+            <div class="flex items-center gap-3 sm:gap-5 text-sm">
                 <?php if(auth()->guard()->check()): ?>
-                    <span class="text-slate-500">Halo, <?php echo e(auth()->user()->name); ?></span>
+                    <span class="hidden sm:inline text-ink-muted">Halo, <?php echo e(auth()->user()->name); ?></span>
                     <?php if(auth()->user()->isStudent()): ?>
-                        <a href="<?php echo e(route('student.dashboard')); ?>" class="hover:text-indigo-600">Dashboard Saya</a>
+                        <a href="<?php echo e(route('student.dashboard')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Pesanan Saya</a>
                     <?php elseif(auth()->user()->isTeacher()): ?>
-                        <a href="<?php echo e(route('teacher.dashboard')); ?>" class="hover:text-indigo-600">Dashboard Guru</a>
+                        <a href="<?php echo e(route('teacher.dashboard')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Dashboard Guru</a>
                     <?php elseif(auth()->user()->isAdmin()): ?>
-                        <a href="<?php echo e(route('admin.dashboard')); ?>" class="hover:text-indigo-600">Panel Admin</a>
+                        <a href="<?php echo e(route('admin.dashboard')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Panel Admin</a>
                     <?php endif; ?>
                     <form method="POST" action="<?php echo e(route('logout')); ?>">
                         <?php echo csrf_field(); ?>
-                        <button class="text-red-500 hover:text-red-600">Keluar</button>
+                        <button type="submit" class="text-ink-muted hover:text-mark font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">
+                            Keluar
+                        </button>
                     </form>
                 <?php else: ?>
-                    <a href="<?php echo e(route('login')); ?>" class="hover:text-indigo-600">Masuk</a>
-                    <a href="<?php echo e(route('register')); ?>" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">Daftar</a>
+                    <a href="<?php echo e(route('login')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Masuk</a>
+                    <a href="<?php echo e(route('register')); ?>" class="bg-board text-white px-4 py-2.5 rounded-lg font-medium hover:bg-board-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper">
+                        Daftar
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main id="konten" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <?php if(session('success')): ?>
-            <div class="mb-6 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 text-sm">
-                <?php echo e(session('success')); ?>
-
+            <div role="status" class="mb-8 bg-white border border-line margin-mark rounded-r-lg px-4 py-3 text-sm flex items-start gap-3">
+                <svg class="w-5 h-5 text-success shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 111.4-1.4L8.5 12l6.8-6.8a1 1 0 011.4 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-ink"><?php echo e(session('success')); ?></span>
             </div>
         <?php endif; ?>
 
         <?php echo e($slot); ?>
 
     </main>
+
+    <footer class="border-t border-line mt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-sm text-ink-muted flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>&copy; <?php echo e(date('Y')); ?> TemanLes. Belajar bareng, di mana saja.</p>
+        </div>
+    </footer>
 </body>
 </html>
 <?php /**PATH C:\laragon\www\TemanLes\resources\views/components/layouts/app.blade.php ENDPATH**/ ?>
