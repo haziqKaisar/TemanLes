@@ -1,4 +1,5 @@
 <x-layouts.app title="Cari Guru — TemanLes">
+<x-student-subnav />
 
     <div class="mb-10 max-w-2xl">
         <p class="text-sm font-medium text-board mb-2 tracking-wide">Cari &amp; booking guru privat</p>

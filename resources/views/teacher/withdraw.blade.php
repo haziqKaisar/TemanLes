@@ -1,4 +1,5 @@
 <x-layouts.app title="Tarik Saldo">
+    <x-teacher-subnav />
     <div class="max-w-xl mx-auto">
         <div class="bg-white rounded-2xl border border-slate-100 p-6">
             <div class="flex items-center justify-between mb-6 pb-6 border-b border-slate-100">

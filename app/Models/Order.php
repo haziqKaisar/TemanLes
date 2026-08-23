@@ -16,7 +16,7 @@ class Order extends Model
         'location_lat', 'location_lng', 'location_address', 'location_note',
         'price_per_hour', 'total_price', 'admin_commission_percent',
         'admin_commission_amount', 'tutor_earning_amount', 'status',
-        'cancel_reason', 'completed_at',
+        'cancel_reason', 'completed_at', 'student_confirmed_at', 'teacher_confirmed_at',
     ];
 
     protected function casts(): array
@@ -24,6 +24,8 @@ class Order extends Model
         return [
             'scheduled_date' => 'date',
             'completed_at' => 'datetime',
+            'student_confirmed_at' => 'datetime',
+            'teacher_confirmed_at' => 'datetime',
         ];
     }
 
@@ -59,7 +61,12 @@ class Order extends Model
         return $this->hasOne(Review::class);
     }
 
-    /** Hitung total biaya, komisi admin, dan bagian guru. Dipanggil sebelum save. */
+    /** Gabungan tanggal + jam jadwal les, sebagai satu waktu Carbon. */
+    public function getScheduledAtAttribute(): \Carbon\Carbon
+    {
+        return \Carbon\Carbon::parse($this->scheduled_date->format('Y-m-d') . ' ' . $this->scheduled_time);
+    }
+
     public function calculatePricing(float $pricePerHour, int $durationMinutes, float $commissionPercent = 10): void
     {
         $total = round($pricePerHour * ($durationMinutes / 60), 2);
@@ -72,9 +79,41 @@ class Order extends Model
         $this->tutor_earning_amount = $total - $commission;
     }
 
-    /** Tandai les selesai -> cairkan dana ke wallet guru (escrow release). */
-    public function markAsCompleted(): void
+    /** Murid konfirmasi les sudah selesai. Kalau guru juga sudah, order langsung diselesaikan. */
+    public function confirmByStudent(): void
     {
+        if ($this->student_confirmed_at) {
+            return;
+        }
+
+        $this->update(['student_confirmed_at' => now()]);
+
+        if ($this->teacher_confirmed_at) {
+            $this->finalizeCompletion();
+        }
+    }
+
+    /** Guru konfirmasi les sudah diajarkan. Kalau murid juga sudah, order langsung diselesaikan. */
+    public function confirmByTeacher(): void
+    {
+        if ($this->teacher_confirmed_at) {
+            return;
+        }
+
+        $this->update(['teacher_confirmed_at' => now()]);
+
+        if ($this->student_confirmed_at) {
+            $this->finalizeCompletion();
+        }
+    }
+
+    /** Dipanggil otomatis begitu KEDUA pihak sudah konfirmasi — cairkan dana ke wallet guru. */
+    protected function finalizeCompletion(): void
+    {
+        if ($this->status === 'completed') {
+            return;
+        }
+
         DB::transaction(function () {
             $this->update(['status' => 'completed', 'completed_at' => now()]);
 
