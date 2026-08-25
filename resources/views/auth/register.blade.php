@@ -16,6 +16,28 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label :value="__('Daftar sebagai')" />
+            <div class="grid grid-cols-2 gap-3 mt-1">
+                <label>
+                    <input type="radio" name="role" value="student" class="sr-only peer" @checked(old('role', 'student') === 'student')>
+                    <div class="text-center py-3 rounded-lg border border-line peer-checked:border-board peer-checked:bg-board/8 peer-checked:text-board cursor-pointer text-sm font-medium text-ink transition-colors">
+                        Murid
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="role" value="teacher" class="sr-only peer" @checked(old('role') === 'teacher')>
+                    <div class="text-center py-3 rounded-lg border border-line peer-checked:border-board peer-checked:bg-board/8 peer-checked:text-board cursor-pointer text-sm font-medium text-ink transition-colors">
+                        Guru
+                    </div>
+                </label>
+            </div>
+            <p class="text-xs text-ink-muted mt-2">Daftar sebagai guru? Profil kamu perlu diverifikasi admin dulu sebelum tampil ke murid.</p>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

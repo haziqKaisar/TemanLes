@@ -13,6 +13,7 @@ use App\Http\Controllers\TutorMarketplaceController;
 use App\Http\Controllers\Teacher\ProfileController;
 use App\Http\Controllers\Teacher\SubjectController;
 use App\Http\Controllers\Teacher\ScheduleController;
+use App\Http\Controllers\Admin\TutorVerificationController;
 use Illuminate\Support\Facades\Route;
 
 // ============================
@@ -80,26 +81,35 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/dashboard', function () {
         $tutor = auth()->user()->tutor;
-        $wallet = $tutor?->wallet;
-        $orders = $tutor?->orders()->with('student')->latest()->paginate(10);
+
+        if (! $tutor || $tutor->verification_status !== 'verified') {
+            return view('teacher.pending', compact('tutor'));
+        }
+
+        $wallet = $tutor->wallet;
+        $orders = $tutor->orders()->with('student')->latest()->paginate(10);
 
         return view('teacher.dashboard', compact('tutor', 'wallet', 'orders'));
     })->name('dashboard');
 
-    Route::get('/withdraw', [WithdrawController::class, 'create'])->name('withdraw');
-    Route::post('/withdraw', [WithdrawController::class, 'store'])->name('withdraw.store');
-
     Route::post('/orders/{order}/confirm', [TeacherOrderController::class, 'confirm'])->name('orders.confirm');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
-Route::post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
-Route::put('/subjects/{tutorSubject}', [SubjectController::class, 'update'])->name('subjects.update');
-Route::delete('/subjects/{tutorSubject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
 
-Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
-Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
-Route::delete('/schedule/{tutorAvailability}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+    Route::middleware('tutor.verified')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+        Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
+        Route::post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
+        Route::put('/subjects/{tutorSubject}', [SubjectController::class, 'update'])->name('subjects.update');
+        Route::delete('/subjects/{tutorSubject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+
+        Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
+        Route::delete('/schedule/{tutorAvailability}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+
+        Route::get('/withdraw', [WithdrawController::class, 'create'])->name('withdraw');
+        Route::post('/withdraw', [WithdrawController::class, 'store'])->name('withdraw.store');
+    });
 });
 
 // ============================
@@ -121,4 +131,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::post('/{payout}/approve', [PayoutApprovalController::class, 'approve'])->name('.approve');
         Route::post('/{payout}/reject', [PayoutApprovalController::class, 'reject'])->name('.reject');
     });
+    Route::prefix('tutors')->name('tutors')->group(function () {
+    Route::get('/', [TutorVerificationController::class, 'index'])->name('');
+    Route::post('/{tutor}/approve', [TutorVerificationController::class, 'approve'])->name('.approve');
+    Route::post('/{tutor}/reject', [TutorVerificationController::class, 'reject'])->name('.reject');
+});
 });

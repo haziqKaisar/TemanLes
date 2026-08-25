@@ -34,6 +34,10 @@
                     <span class="min-w-0 flex-1"><span class="block text-sm font-bold text-ink">{{ $pendingPayouts }} permintaan pencairan guru</span><span class="mt-0.5 block text-xs text-ink-muted">Guru sedang menunggu pencairan saldo.</span></span>
                     <span class="hidden items-center gap-1 text-xs font-bold text-board sm:flex">Lihat <span aria-hidden="true">›</span></span>
                 </a>
+                <a href="{{ route('admin.tutors') }}" class="bg-white rounded-2xl border border-line p-6 hover:shadow-md transition block">
+            <p class="text-sm text-ink-muted mb-1">Verifikasi Guru</p>
+            <p class="text-lg font-semibold text-ink">ACC pendaftaran guru baru &rarr;</p>
+        </a>
             </div>
         </div>
 
