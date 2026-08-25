@@ -17,10 +17,12 @@
 
         <div class="mb-4">
             <p class="text-sm text-slate-500 mb-2">Bukti Transfer</p>
-            @if(str_ends_with($payment->proof_file, '.pdf'))
-                <a href="{{ Storage::url($payment->proof_file) }}" target="_blank" class="text-indigo-600 underline text-sm">Buka file PDF</a>
+            @if($payment->proofExists())
+                <div class="flex h-96 items-center justify-center overflow-hidden rounded-lg border bg-slate-50">
+                    <img src="{{ route('admin.payments.proof', $payment) }}" alt="Bukti transfer" class="max-h-full max-w-full object-contain">
+                </div>
             @else
-                <img src="{{ Storage::url($payment->proof_file) }}" class="rounded-lg border max-h-80 object-contain">
+                <p class="text-sm text-red-500">File bukti transfer tidak ditemukan.</p>
             @endif
         </div>
 

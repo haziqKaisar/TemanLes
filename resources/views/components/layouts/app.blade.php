@@ -1,3 +1,5 @@
+@props(['title' => 'TemanLes', 'compact' => false])
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,14 +24,16 @@
 
     <nav class="bg-paper border-b border-line sticky top-0 z-40" aria-label="Navigasi utama">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 font-display font-semibold text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
-                <span class="inline-block w-2 h-2 rounded-full bg-mark" aria-hidden="true"></span>
-                Teman<span class="text-board">Les</span>
+            <a href="{{ route('home') }}" class="flex items-center gap-2 font-display font-semibold text-xl text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
+                <span class="inline-block h-2.5 w-2.5 rounded-full bg-mark" aria-hidden="true"></span>
+                Teman <span class="text-board">Les</span>
             </a>
 
             <div class="flex items-center gap-3 sm:gap-5 text-sm">
                 @auth
-                    <span class="hidden sm:inline text-ink-muted">Halo, {{ auth()->user()->name }}</span>
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('marketplace') }}" class="hidden md:inline text-ink-muted hover:text-board font-medium">Cari Guru</a>
+                    @endif
                     @if(auth()->user()->isStudent())
                         <a href="{{ route('student.dashboard') }}" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Pesanan Saya</a>
                     @elseif(auth()->user()->isTeacher())
@@ -37,6 +41,7 @@
                     @elseif(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Panel Admin</a>
                     @endif
+                    <span class="hidden sm:inline text-ink-muted">Halo, {{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="text-ink-muted hover:text-mark font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">
@@ -53,7 +58,11 @@
         </div>
     </nav>
 
-    <main id="konten" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <main id="konten" @class([
+        'max-w-6xl mx-auto px-4 sm:px-6',
+        'py-4 sm:py-5 lg:h-[calc(100vh-64px)] lg:overflow-hidden' => $compact,
+        'py-8 sm:py-10' => ! $compact,
+    ])>
         @if (session('success'))
             <div role="status" class="mb-8 bg-white border border-line margin-mark rounded-r-lg px-4 py-3 text-sm flex items-start gap-3">
                 <svg class="w-5 h-5 text-success shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -66,10 +75,17 @@
         {{ $slot }}
     </main>
 
-    <footer class="border-t border-line mt-16">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-sm text-ink-muted flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>&copy; {{ date('Y') }} TemanLes. Belajar bareng, di mana saja.</p>
+    @unless($compact)
+    <footer class="border-t border-line mt-16 bg-white/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-7 text-sm text-ink-muted flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>&copy; {{ date('Y') }} TemanLes. All rights reserved.</p>
+            <div class="flex items-center gap-5">
+                <a href="{{ route('home') }}" class="hover:text-board">Beranda</a>
+                @auth <a href="{{ route('marketplace') }}" class="hover:text-board">Cari Guru</a> @endauth
+                <a href="#" class="hover:text-board">Syarat &amp; Ketentuan</a>
+            </div>
         </div>
     </footer>
+    @endunless
 </body>
 </html>

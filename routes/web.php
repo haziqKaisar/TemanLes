@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PaymentApprovalController;
 use App\Http\Controllers\Admin\PayoutApprovalController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PaymentController;
@@ -105,13 +106,12 @@ Route::delete('/schedule/{tutorAvailability}', [ScheduleController::class, 'dest
 // ADMIN
 // ============================
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::prefix('payments')->name('payments')->group(function () {
         Route::get('/', [PaymentApprovalController::class, 'index'])->name('');
         Route::get('/{payment}', [PaymentApprovalController::class, 'show'])->name('.show');
+        Route::get('/{payment}/proof', [PaymentApprovalController::class, 'proof'])->name('.proof');
         Route::post('/{payment}/approve', [PaymentApprovalController::class, 'approve'])->name('.approve');
         Route::post('/{payment}/reject', [PaymentApprovalController::class, 'reject'])->name('.reject');
     });

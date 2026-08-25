@@ -1,3 +1,33 @@
+<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
+
+$__newAttributes = [];
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['title' => 'TemanLes', 'compact' => false]));
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (in_array($__key, $__propNames)) {
+        $$__key = $$__key ?? $__value;
+    } else {
+        $__newAttributes[$__key] = $__value;
+    }
+}
+
+$attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
+
+unset($__propNames);
+unset($__newAttributes);
+
+foreach (array_filter((['title' => 'TemanLes', 'compact' => false]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+}
+
+$__defined_vars = get_defined_vars();
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
+}
+
+unset($__defined_vars, $__key, $__value); ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,14 +52,16 @@
 
     <nav class="bg-paper border-b border-line sticky top-0 z-40" aria-label="Navigasi utama">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2 font-display font-semibold text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
-                <span class="inline-block w-2 h-2 rounded-full bg-mark" aria-hidden="true"></span>
-                Teman<span class="text-board">Les</span>
+            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2 font-display font-semibold text-xl text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
+                <span class="inline-block h-2.5 w-2.5 rounded-full bg-mark" aria-hidden="true"></span>
+                Teman <span class="text-board">Les</span>
             </a>
 
             <div class="flex items-center gap-3 sm:gap-5 text-sm">
                 <?php if(auth()->guard()->check()): ?>
-                    <span class="hidden sm:inline text-ink-muted">Halo, <?php echo e(auth()->user()->name); ?></span>
+                    <?php if(auth()->user()->isAdmin()): ?>
+                        <a href="<?php echo e(route('marketplace')); ?>" class="hidden md:inline text-ink-muted hover:text-board font-medium">Cari Guru</a>
+                    <?php endif; ?>
                     <?php if(auth()->user()->isStudent()): ?>
                         <a href="<?php echo e(route('student.dashboard')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Pesanan Saya</a>
                     <?php elseif(auth()->user()->isTeacher()): ?>
@@ -37,6 +69,7 @@
                     <?php elseif(auth()->user()->isAdmin()): ?>
                         <a href="<?php echo e(route('admin.dashboard')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Panel Admin</a>
                     <?php endif; ?>
+                    <span class="hidden sm:inline text-ink-muted">Halo, <?php echo e(auth()->user()->name); ?></span>
                     <form method="POST" action="<?php echo e(route('logout')); ?>">
                         <?php echo csrf_field(); ?>
                         <button type="submit" class="text-ink-muted hover:text-mark font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">
@@ -53,7 +86,11 @@
         </div>
     </nav>
 
-    <main id="konten" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <main id="konten" class="<?php echo \Illuminate\Support\Arr::toCssClasses([
+        'max-w-6xl mx-auto px-4 sm:px-6',
+        'py-4 sm:py-5 lg:h-[calc(100vh-64px)] lg:overflow-hidden' => $compact,
+        'py-8 sm:py-10' => ! $compact,
+    ]); ?>">
         <?php if(session('success')): ?>
             <div role="status" class="mb-8 bg-white border border-line margin-mark rounded-r-lg px-4 py-3 text-sm flex items-start gap-3">
                 <svg class="w-5 h-5 text-success shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -67,11 +104,18 @@
 
     </main>
 
-    <footer class="border-t border-line mt-16">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-sm text-ink-muted flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>&copy; <?php echo e(date('Y')); ?> TemanLes. Belajar bareng, di mana saja.</p>
+    <?php if (! ($compact)): ?>
+    <footer class="border-t border-line mt-16 bg-white/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-7 text-sm text-ink-muted flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>&copy; <?php echo e(date('Y')); ?> TemanLes. All rights reserved.</p>
+            <div class="flex items-center gap-5">
+                <a href="<?php echo e(route('home')); ?>" class="hover:text-board">Beranda</a>
+                <?php if(auth()->guard()->check()): ?> <a href="<?php echo e(route('marketplace')); ?>" class="hover:text-board">Cari Guru</a> <?php endif; ?>
+                <a href="#" class="hover:text-board">Syarat &amp; Ketentuan</a>
+            </div>
         </div>
     </footer>
+    <?php endif; ?>
 </body>
 </html>
 <?php /**PATH C:\laragon\www\TemanLes\resources\views/components/layouts/app.blade.php ENDPATH**/ ?>

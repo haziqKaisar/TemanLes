@@ -13,14 +13,18 @@ class PayoutApprovalController extends Controller
     public function index(Request $request)
     {
         $status = $request->get('status', 'pending');
+        abort_unless(in_array($status, ['pending', 'approved', 'paid', 'rejected'], true), 404);
 
         $payouts = Payout::with('tutor.user')
             ->when($status, fn ($q) => $q->where('status', $status))
+            ->when($request->search, fn ($q) => $q->whereHas('tutor.user', fn ($user) => $user->where('name', 'like', '%' . $request->search . '%')))
             ->latest()
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.payouts.index', compact('payouts', 'status'));
+        $statusCounts = Payout::selectRaw('status, count(*) as total')->groupBy('status')->pluck('total', 'status');
+
+        return view('admin.payouts.index', compact('payouts', 'status', 'statusCounts'));
     }
 
     public function approve(Payout $payout)
