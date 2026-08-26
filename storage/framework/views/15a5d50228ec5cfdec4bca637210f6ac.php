@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? 'TemanLes' }}</title>
+    <title><?php echo e($title ?? 'TemanLes'); ?></title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <body class="bg-paper-alt antialiased">
 
@@ -18,12 +18,13 @@
 
             <!-- Panel Form -->
             <div class="p-8 sm:p-12 flex flex-col justify-center">
-                <a href="{{ route('home') }}" class="flex items-center gap-2 font-display font-semibold text-lg text-ink mb-10 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 rounded">
+                <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2 font-display font-semibold text-lg text-ink mb-10 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 rounded">
                     <span class="inline-block w-2 h-2 rounded-full bg-mark" aria-hidden="true"></span>
                     Teman<span class="text-board">Les</span>
                 </a>
 
-                {{ $slot }}
+                <?php echo e($slot); ?>
+
             </div>
 
              <!-- Panel Kanan -->
@@ -90,3 +91,4 @@
 
 </body>
 </html>
+<?php /**PATH C:\laragon\www\TemanLes\resources\views/layouts/guest.blade.php ENDPATH**/ ?>

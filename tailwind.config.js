@@ -23,6 +23,7 @@ export default {
                 mark: '#093C5D',
                 success: '#187A63',
                 line: '#D6E3E7',
+                teal: '#6FD1D7',
             },
         },
     },
