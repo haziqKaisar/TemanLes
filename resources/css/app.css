@@ -5,6 +5,11 @@
 body {
     font-family: theme('fontFamily.body');
     color: theme('colors.ink');
+    background:
+        radial-gradient(circle at top left, rgba(111, 209, 215, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(59, 117, 151, 0.10), transparent 24%),
+        radial-gradient(circle at bottom center, rgba(93, 248, 216, 0.08), transparent 32%),
+        theme('colors.paper');
 }
 
 .font-display {
@@ -21,8 +26,8 @@ body {
 }
 
 ::selection {
-    background-color: theme('colors.chalk');
-    color: theme('colors.ink');
+background-color: theme('colors.board');
+color: white;
 }
 
 /* Transisi halus default untuk semua elemen interaktif — biar hover terasa smooth, bukan patah-patah */

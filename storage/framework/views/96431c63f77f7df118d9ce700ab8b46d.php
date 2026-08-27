@@ -52,8 +52,8 @@ unset($__defined_vars, $__key, $__value); ?>
 
     <nav class="bg-paper border-b border-line sticky top-0 z-40" aria-label="Navigasi utama">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2 font-display font-semibold text-xl text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
-                <span class="inline-block h-2.5 w-2.5 rounded-full bg-mark" aria-hidden="true"></span>
+            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 font-display font-semibold text-xl text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
+                <span class="inline-block h-3 w-3 rounded-full bg-gradient-to-br from-board to-mark shadow-sm ring-2 ring-mark/30" aria-hidden="true"></span>
                 Teman <span class="text-board">Les</span>
             </a>
 
@@ -78,7 +78,7 @@ unset($__defined_vars, $__key, $__value); ?>
                     </form>
                 <?php else: ?>
                     <a href="<?php echo e(route('login')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Masuk</a>
-                    <a href="<?php echo e(route('register')); ?>" class="bg-board text-white px-4 py-2.5 rounded-lg font-medium hover:bg-board-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper">
+                    <a href="<?php echo e(route('register')); ?>" class="bg-gradient-to-r from-board to-chalk text-white px-4 py-2.5 rounded-lg font-medium shadow-sm shadow-board/20 hover:to-board-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper">
                         Daftar
                     </a>
                 <?php endif; ?>
