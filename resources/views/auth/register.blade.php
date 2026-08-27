@@ -9,7 +9,7 @@
         <div>
             <label for="name" class="block text-sm font-medium text-ink mb-1.5">Nama lengkap</label>
             <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name"
-                class="w-full rounded-lg border border-line px-3.5 py-3 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board"placeholder="Nama Lengkap">
+                class="w-full rounded-lg border border-line px-3.5 py-3 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board">
             @error('name') <p class="text-mark text-xs mt-1.5">{{ $message }}</p> @enderror
         </div>
 
