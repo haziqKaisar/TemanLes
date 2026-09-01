@@ -99,6 +99,12 @@ unset($__defined_vars, $__key, $__value); ?>
                 <span class="text-ink"><?php echo e(session('success')); ?></span>
             </div>
         <?php endif; ?>
+                <?php if(session('error')): ?>
+            <div role="alert" class="mb-8 bg-white border border-line border-l-[3px] border-l-mark rounded-r-lg px-4 py-3 text-sm flex items-start gap-3">
+                <svg class="w-5 h-5 text-mark shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5a1 1 0 112 0 1 1 0 01-2 0zm1-9a1 1 0 011 1v5a1 1 0 11-2 0V5a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                <span class="text-ink"><?php echo e(session('error')); ?></span>
+            </div>
+        <?php endif; ?>
 
         <?php echo e($slot); ?>
 
