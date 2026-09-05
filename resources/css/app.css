@@ -32,6 +32,37 @@ a, button, input, select, textarea {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Horizontal slide/glide transitions for subnav tabs */
+@keyframes slideInFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slide-in-right {
+    animation: slideInFromRight 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInFromLeft 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -40,3 +71,4 @@ a, button, input, select, textarea {
         scroll-behavior: auto !important;
     }
 }
+

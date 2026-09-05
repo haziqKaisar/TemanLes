@@ -8,6 +8,8 @@
 <?php $attributes = $attributes->except(\App\View\Components\GuestLayout::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['title' => 'Masuk — TemanLes']); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
 
     <h1 class="font-display text-3xl font-semibold text-ink mb-2">Halo, selamat datang kembali</h1>
     <p class="text-ink-muted mb-8">Masuk untuk lanjut cari &amp; booking guru privat</p>

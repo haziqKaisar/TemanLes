@@ -1,5 +1,37 @@
-<x-layouts.app title="Tarik Saldo — TemanLes">
-    <x-teacher-subnav />
+<?php if (isset($component)) { $__componentOriginal5863877a5171c196453bfa0bd807e410 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5863877a5171c196453bfa0bd807e410 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Tarik Saldo — TemanLes']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('layouts.app'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => 'Tarik Saldo — TemanLes']); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+    <?php if (isset($component)) { $__componentOriginale498924ff5b74ca89381c496bdb04986 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale498924ff5b74ca89381c496bdb04986 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.teacher-subnav','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('teacher-subnav'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale498924ff5b74ca89381c496bdb04986)): ?>
+<?php $attributes = $__attributesOriginale498924ff5b74ca89381c496bdb04986; ?>
+<?php unset($__attributesOriginale498924ff5b74ca89381c496bdb04986); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale498924ff5b74ca89381c496bdb04986)): ?>
+<?php $component = $__componentOriginale498924ff5b74ca89381c496bdb04986; ?>
+<?php unset($__componentOriginale498924ff5b74ca89381c496bdb04986); ?>
+<?php endif; ?>
 
     <div id="teacher-content-wrapper">
         <div class="mb-8">
@@ -15,7 +47,7 @@
                     <div class="bg-paper/60 border border-line/80 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
                             <p class="text-xs font-bold uppercase tracking-wider text-ink-muted mb-1">Saldo Tersedia</p>
-                            <p class="font-display text-3xl sm:text-4xl font-extrabold text-board">Rp {{ number_format($wallet->balance, 0, ',', '.') }}</p>
+                            <p class="font-display text-3xl sm:text-4xl font-extrabold text-board">Rp <?php echo e(number_format($wallet->balance, 0, ',', '.')); ?></p>
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-teal/20 text-board flex items-center justify-center shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -23,35 +55,63 @@
                     </div>
 
                     <!-- Form Penarikan -->
-                    <form method="POST" action="{{ route('teacher.withdraw.store') }}" class="space-y-6">
-                        @csrf
+                    <form method="POST" action="<?php echo e(route('teacher.withdraw.store')); ?>" class="space-y-6">
+                        <?php echo csrf_field(); ?>
                         <div>
                             <label for="amount" class="block text-xs font-bold uppercase tracking-wider text-ink mb-2">Jumlah Penarikan (Rp)</label>
-                            <input id="amount" type="number" name="amount" min="50000" value="{{ old('amount') }}" placeholder="Contoh: 100000"
+                            <input id="amount" type="number" name="amount" min="50000" value="<?php echo e(old('amount')); ?>" placeholder="Contoh: 100000"
                                 class="w-full rounded-xl border border-line bg-paper/30 px-4 py-3 text-sm text-ink font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board transition-all">
-                            @error('amount') <p class="text-mark text-xs font-semibold mt-1.5">{{ $message }}</p> @enderror
+                            <?php $__errorArgs = ['amount'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs font-semibold mt-1.5"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div>
                             <label for="bank_name" class="block text-xs font-bold uppercase tracking-wider text-ink mb-2">Nama Bank</label>
-                            <input id="bank_name" type="text" name="bank_name" value="{{ old('bank_name') }}" placeholder="Contoh: BCA, Mandiri, BRI, BNI"
+                            <input id="bank_name" type="text" name="bank_name" value="<?php echo e(old('bank_name')); ?>" placeholder="Contoh: BCA, Mandiri, BRI, BNI"
                                 class="w-full rounded-xl border border-line bg-paper/30 px-4 py-3 text-sm text-ink font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board transition-all">
-                            @error('bank_name') <p class="text-mark text-xs font-semibold mt-1.5">{{ $message }}</p> @enderror
+                            <?php $__errorArgs = ['bank_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs font-semibold mt-1.5"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <label for="account_number" class="block text-xs font-bold uppercase tracking-wider text-ink mb-2">Nomor Rekening</label>
-                                <input id="account_number" type="text" name="account_number" value="{{ old('account_number') }}" placeholder="Masukkan nomor rekening"
+                                <input id="account_number" type="text" name="account_number" value="<?php echo e(old('account_number')); ?>" placeholder="Masukkan nomor rekening"
                                     class="w-full rounded-xl border border-line bg-paper/30 px-4 py-3 text-sm text-ink font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board transition-all">
-                                @error('account_number') <p class="text-mark text-xs font-semibold mt-1.5">{{ $message }}</p> @enderror
+                                <?php $__errorArgs = ['account_number'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs font-semibold mt-1.5"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div>
                                 <label for="account_holder" class="block text-xs font-bold uppercase tracking-wider text-ink mb-2">Atas Nama</label>
-                                <input id="account_holder" type="text" name="account_holder" value="{{ old('account_holder') }}" placeholder="Sesuai nama di rekening"
+                                <input id="account_holder" type="text" name="account_holder" value="<?php echo e(old('account_holder')); ?>" placeholder="Sesuai nama di rekening"
                                     class="w-full rounded-xl border border-line bg-paper/30 px-4 py-3 text-sm text-ink font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board transition-all">
-                                @error('account_holder') <p class="text-mark text-xs font-semibold mt-1.5">{{ $message }}</p> @enderror
+                                <?php $__errorArgs = ['account_holder'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="text-mark text-xs font-semibold mt-1.5"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
 
@@ -92,5 +152,15 @@
             </div>
         </div>
     </div>
-</x-layouts.app>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $attributes = $__attributesOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__attributesOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
 
+<?php /**PATH C:\laragon\www\TemanLes\resources\views/teacher/withdraw.blade.php ENDPATH**/ ?>
