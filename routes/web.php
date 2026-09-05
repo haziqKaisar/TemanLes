@@ -1,19 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PaymentApprovalController;
 use App\Http\Controllers\Admin\PayoutApprovalController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\TutorVerificationController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Student\OrderController as StudentOrderController;
 use App\Http\Controllers\Teacher\OrderController as TeacherOrderController;
+use App\Http\Controllers\Teacher\ProfileController;
+use App\Http\Controllers\Teacher\ScheduleController;
+use App\Http\Controllers\Teacher\SubjectController;
 use App\Http\Controllers\Teacher\WithdrawController;
 use App\Http\Controllers\TutorMarketplaceController;
-use App\Http\Controllers\Teacher\ProfileController;
-use App\Http\Controllers\Teacher\SubjectController;
-use App\Http\Controllers\Teacher\ScheduleController;
-use App\Http\Controllers\Admin\TutorVerificationController;
 use Illuminate\Support\Facades\Route;
 
 // ============================
@@ -106,6 +106,8 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
         Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
         Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
         Route::delete('/schedule/{tutorAvailability}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+        // PERUBAHAN: Menambahkan route update jadwal di bawah ini
+        Route::put('/schedule/{tutorAvailability}', [ScheduleController::class, 'update'])->name('schedule.update');
 
         Route::get('/withdraw', [WithdrawController::class, 'create'])->name('withdraw');
         Route::post('/withdraw', [WithdrawController::class, 'store'])->name('withdraw.store');
@@ -131,9 +133,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::post('/{payout}/approve', [PayoutApprovalController::class, 'approve'])->name('.approve');
         Route::post('/{payout}/reject', [PayoutApprovalController::class, 'reject'])->name('.reject');
     });
+
     Route::prefix('tutors')->name('tutors')->group(function () {
-    Route::get('/', [TutorVerificationController::class, 'index'])->name('');
-    Route::post('/{tutor}/approve', [TutorVerificationController::class, 'approve'])->name('.approve');
-    Route::post('/{tutor}/reject', [TutorVerificationController::class, 'reject'])->name('.reject');
-});
-});
+        Route::get('/', [TutorVerificationController::class, 'index'])->name('');
+        Route::post('/{tutor}/approve', [TutorVerificationController::class, 'approve'])->name('.approve');
+        Route::post('/{tutor}/reject', [TutorVerificationController::class, 'reject'])->name('.reject');
+    });
+}); 
