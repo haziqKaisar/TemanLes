@@ -140,4 +140,3 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::post('/{tutor}/reject', [TutorVerificationController::class, 'reject'])->name('.reject');
     });
 }); 
-

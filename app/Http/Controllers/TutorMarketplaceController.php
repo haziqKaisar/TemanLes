@@ -10,22 +10,43 @@ class TutorMarketplaceController extends Controller
 {
     public function index(Request $request)
     {
-        $tutors = Tutor::verified()
-            ->with(['user', 'tutorSubjects.subject'])
-            ->when($request->subject_id || $request->level || $request->min_price || $request->max_price, function ($q) use ($request) {
-                $q->whereHas('tutorSubjects', function ($q) use ($request) {
-                    $q->when($request->subject_id, fn ($q) => $q->where('subject_id', $request->subject_id))
-                        ->when($request->level, fn ($q) => $q->where('level', $request->level))
-                        ->when($request->min_price, fn ($q) => $q->where('price_per_hour', '>=', $request->min_price))
-                        ->when($request->max_price, fn ($q) => $q->where('price_per_hour', '<=', $request->max_price));
-                });
-            })
-            ->when($request->mode, fn ($q) => $q->where(fn ($q) => $q->where('teaching_mode', $request->mode)->orWhere('teaching_mode', 'both')))
-            ->orderByDesc('rating_avg')
-            ->paginate(9)
-            ->withQueryString();
+        $query = Tutor::query()
+            ->where('verification_status', 'verified')
+            ->with(['user', 'tutorSubjects.subject']);
 
-        $subjects = Subject::orderBy('name')->get();
+        // Filter berdasarkan Mata Pelajaran atau Jenjang
+        if ($request->filled('subject_id') || $request->filled('level') || $request->filled('min_price') || $request->filled('max_price')) {
+            $query->whereHas('tutorSubjects', function ($q) use ($request) {
+                if ($request->filled('subject_id')) {
+                    $q->where('subject_id', $request->subject_id);
+                }
+
+                if ($request->filled('level')) {
+                    $q->where('level', $request->level);
+                }
+
+                if ($request->filled('min_price')) {
+                    $q->where('price_per_hour', '>=', $request->min_price);
+                }
+
+                if ($request->filled('max_price')) {
+                    $q->where('price_per_hour', '<=', $request->max_price);
+                }
+            });
+        }
+
+        // Filter berdasarkan Cara Belajar (Online / Offline)
+        if ($request->filled('mode')) {
+            $mode = $request->mode;
+            $query->where(function ($q) use ($mode) {
+                $q->where('teaching_mode', $mode)
+                  ->orWhere('teaching_mode', 'both');
+            });
+        }
+
+        // Ambil data tutor yang telah difilter dengan pagination & sertakan query string agar pagnation tidak meng-clear filter
+        $tutors = $query->paginate(9)->withQueryString();
+        $subjects = Subject::all();
 
         return view('marketplace.index', compact('tutors', 'subjects'));
     }

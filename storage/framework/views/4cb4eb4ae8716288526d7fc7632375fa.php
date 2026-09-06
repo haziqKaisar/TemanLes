@@ -42,69 +42,70 @@
         </p>
     </div>
 
-    <!-- Filter Form: Clean & Neutral Background -->
-    <form method="GET" action="<?php echo e(route('home')); ?>" class="bg-white border border-[#6FD1D7]/40 rounded-2xl p-5 mb-8 shadow-sm">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div class="relative">
-                <label for="f-subject" class="sr-only">Mata pelajaran</label>
-                <select id="f-subject" name="subject_id" onchange="this.form.submit()"
-                    class="appearance-none w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
-                    <option value="">Semua mapel</option>
-                    <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($subject->id); ?>" <?php if(request('subject_id') == $subject->id): echo 'selected'; endif; ?>><?php echo e($subject->name); ?></option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
-                <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B7597]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.2 7.5a.75.75 0 011.06.02L10 11.148l3.74-3.628a.75.75 0 111.04 1.08l-4.25 4.125a.75.75 0 01-1.04 0L5.24 8.6a.75.75 0 01-.04-1.06z" clip-rule="evenodd"/></svg>
-            </div>
-
-            <div class="relative">
-                <label for="f-level" class="sr-only">Jenjang</label>
-                <select id="f-level" name="level" onchange="this.form.submit()"
-                    class="appearance-none w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
-                    <option value="">Semua jenjang</option>
-                    <?php $__currentLoopData = ['SD', 'SMP', 'SMA', 'Umum']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lvl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($lvl); ?>" <?php if(request('level') == $lvl): echo 'selected'; endif; ?>><?php echo e($lvl); ?></option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
-                <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B7597]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.2 7.5a.75.75 0 011.06.02L10 11.148l3.74-3.628a.75.75 0 111.04 1.08l-4.25 4.125a.75.75 0 01-1.04 0L5.24 8.6a.75.75 0 01-.04-1.06z" clip-rule="evenodd"/></svg>
-            </div>
-
-            <div class="relative">
-                <label for="f-mode" class="sr-only">Cara belajar</label>
-                <select id="f-mode" name="mode" onchange="this.form.submit()"
-                    class="appearance-none w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
-                    <option value="">Semua cara belajar</option>
-                    <option value="online" <?php if(request('mode') == 'online'): echo 'selected'; endif; ?>>Online</option>
-                    <option value="offline" <?php if(request('mode') == 'offline'): echo 'selected'; endif; ?>>Tatap muka</option>
-                </select>
-                <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B7597]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.2 7.5a.75.75 0 011.06.02L10 11.148l3.74-3.628a.75.75 0 111.04 1.08l-4.25 4.125a.75.75 0 01-1.04 0L5.24 8.6a.75.75 0 01-.04-1.06z" clip-rule="evenodd"/></svg>
-            </div>
-
-            <div>
-                <label for="f-min" class="sr-only">Harga minimal</label>
-                <input id="f-min" type="number" name="min_price" value="<?php echo e(request('min_price')); ?>" placeholder="Harga min"
-                    class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
-            </div>
-
-            <div>
-                <label for="f-max" class="sr-only">Harga maksimal</label>
-                <input id="f-max" type="number" name="max_price" value="<?php echo e(request('max_price')); ?>" placeholder="Harga max"
-                    class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
-            </div>
+    <!-- Ubah action dari route('home') ke route('marketplace') -->
+<form method="GET" action="<?php echo e(route('marketplace')); ?>" class="bg-white border border-[#6FD1D7]/40 rounded-2xl p-5 mb-8 shadow-sm">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <div class="relative">
+            <label for="f-subject" class="sr-only">Mata pelajaran</label>
+            <select id="f-subject" name="subject_id" onchange="this.form.submit()"
+                class="appearance-none w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
+                <option value="">Semua mapel</option>
+                <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($subject->id); ?>" <?php if(request('subject_id') == $subject->id): echo 'selected'; endif; ?>><?php echo e($subject->name); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B7597]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.2 7.5a.75.75 0 011.06.02L10 11.148l3.74-3.628a.75.75 0 111.04 1.08l-4.25 4.125a.75.75 0 01-1.04 0L5.24 8.6a.75.75 0 01-.04-1.06z" clip-rule="evenodd"/></svg>
         </div>
 
-        <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
-            <button type="submit" class="text-sm text-[#093C5D] font-semibold hover:text-[#3B7597] focus:outline-none">
-                Terapkan filter harga →
-            </button>
-
-            <?php if(request()->anyFilled(['subject_id', 'level', 'mode', 'min_price', 'max_price'])): ?>
-                <a href="<?php echo e(route('home')); ?>" class="text-xs text-gray-500 hover:text-red-500 transition-colors">
-                    Reset filter
-                </a>
-            <?php endif; ?>
+        <div class="relative">
+            <label for="f-level" class="sr-only">Jenjang</label>
+            <select id="f-level" name="level" onchange="this.form.submit()"
+                class="appearance-none w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
+                <option value="">Semua jenjang</option>
+                <?php $__currentLoopData = ['SD', 'SMP', 'SMA', 'Umum']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lvl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($lvl); ?>" <?php if(request('level') == $lvl): echo 'selected'; endif; ?>><?php echo e($lvl); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B7597]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.2 7.5a.75.75 0 011.06.02L10 11.148l3.74-3.628a.75.75 0 111.04 1.08l-4.25 4.125a.75.75 0 01-1.04 0L5.24 8.6a.75.75 0 01-.04-1.06z" clip-rule="evenodd"/></svg>
         </div>
-    </form>
+
+        <div class="relative">
+            <label for="f-mode" class="sr-only">Cara belajar</label>
+            <select id="f-mode" name="mode" onchange="this.form.submit()"
+                class="appearance-none w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
+                <option value="">Semua cara belajar</option>
+                <option value="online" <?php if(request('mode') == 'online'): echo 'selected'; endif; ?>>Online</option>
+                <option value="offline" <?php if(request('mode') == 'offline'): echo 'selected'; endif; ?>>Tatap muka</option>
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B7597]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.2 7.5a.75.75 0 011.06.02L10 11.148l3.74-3.628a.75.75 0 111.04 1.08l-4.25 4.125a.75.75 0 01-1.04 0L5.24 8.6a.75.75 0 01-.04-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+
+        <div>
+            <label for="f-min" class="sr-only">Harga minimal</label>
+            <input id="f-min" type="number" name="min_price" value="<?php echo e(request('min_price')); ?>" placeholder="Harga min"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
+        </div>
+
+        <div>
+            <label for="f-max" class="sr-only">Harga maksimal</label>
+            <input id="f-max" type="number" name="max_price" value="<?php echo e(request('max_price')); ?>" placeholder="Harga max"
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-[#093C5D] placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#093C5D]">
+        </div>
+    </div>
+
+    <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
+        <button type="submit" class="text-sm text-[#093C5D] font-semibold hover:text-[#3B7597] focus:outline-none">
+            Terapkan filter pencarian →
+        </button>
+
+        <?php if(request()->anyFilled(['subject_id', 'level', 'mode', 'min_price', 'max_price'])): ?>
+            <!-- Ubah tautan reset ke route('marketplace') -->
+            <a href="<?php echo e(route('marketplace')); ?>" class="text-xs text-gray-500 hover:text-red-500 transition-colors">
+                Reset filter
+            </a>
+        <?php endif; ?>
+    </div>
+</form>
 
     <p class="text-sm text-[#3B7597] mb-4"><span class="font-bold text-[#093C5D]"><?php echo e($tutors->total()); ?></span> guru ditemukan</p>
 
