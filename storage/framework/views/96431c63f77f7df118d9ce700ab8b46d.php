@@ -50,11 +50,19 @@ unset($__defined_vars, $__key, $__value); ?>
         Lewati ke konten utama
     </a>
 
+<<<<<<< HEAD
     <nav class="bg-white/95 backdrop-blur border-b border-line sticky top-0 z-40 shadow-xs" aria-label="Navigasi utama">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 font-display font-bold text-xl text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board rounded-lg transition-transform hover:scale-[1.01]">
                 <span class="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-teal/20 text-board font-extrabold text-sm">TL</span>
                 <span>Teman <span class="text-board font-extrabold">Les</span></span>
+=======
+    <nav class="bg-paper border-b border-line sticky top-0 z-40" aria-label="Navigasi utama">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 font-display font-semibold text-xl text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded">
+                <span class="inline-block h-3 w-3 rounded-full bg-gradient-to-br from-board to-mark shadow-sm ring-2 ring-mark/30" aria-hidden="true"></span>
+                Teman <span class="text-board">Les</span>
+>>>>>>> d4bfe6b6beda99088dfd6c79b8b1ee08e22a6177
             </a>
 
             <div class="flex items-center gap-4 sm:gap-6 text-sm">
@@ -80,8 +88,13 @@ unset($__defined_vars, $__key, $__value); ?>
                         </button>
                     </form>
                 <?php else: ?>
+<<<<<<< HEAD
                     <a href="<?php echo e(route('login')); ?>" class="text-ink hover:text-board font-semibold px-2 py-1">Masuk</a>
                     <a href="<?php echo e(route('register')); ?>" class="bg-board text-white px-4 py-2 rounded-xl font-medium hover:bg-board-light transition-colors shadow-xs">
+=======
+                    <a href="<?php echo e(route('login')); ?>" class="text-ink hover:text-board font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded px-1">Masuk</a>
+                    <a href="<?php echo e(route('register')); ?>" class="bg-gradient-to-r from-board to-chalk text-white px-4 py-2.5 rounded-lg font-medium shadow-sm shadow-board/20 hover:to-board-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mark focus-visible:ring-offset-2 focus-visible:ring-offset-paper">
+>>>>>>> d4bfe6b6beda99088dfd6c79b8b1ee08e22a6177
                         Daftar
                     </a>
                 <?php endif; ?>

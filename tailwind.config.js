@@ -12,6 +12,19 @@ export default {
                 body: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
             },
             colors: {
+<<<<<<< HEAD
+				paper: '#FFFFFF',
+				'paper-alt': '#F7FBFC',
+				ink: '#093C5D',
+				'ink-muted': '#3B7597',
+				board: '#3B7597',
+				'board-light': '#6FD1D7',
+				'board-dark': '#093C5D',
+				chalk: '#6FD1D7',
+				mark: '#5DF8D8',
+				success: '#5DF8D8',
+				line: '#D9E8EE',
+=======
                 paper: '#F4F8F9',
                 'paper-alt': '#E6EFF1',
                 ink: '#093C5D',
@@ -24,6 +37,7 @@ export default {
                 success: '#187A63',
                 line: '#D6E3E7',
                 teal: '#6FD1D7',
+>>>>>>> ad3b559221c7f193fbb51c26cc06a8a982da455b
             },
         },
     },
