@@ -41,6 +41,26 @@ class ScheduleController extends Controller
         return back()->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
+    public function update(Request $request, TutorAvailability $tutorAvailability)
+    {
+        $tutor = Auth::user()->tutor;
+        abort_unless($tutor && $tutorAvailability->tutor_id === $tutor->id, 403);
+
+        $data = $request->validate([
+            'day_of_week' => 'required|integer|between:0,6',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+        ]);
+
+        $tutorAvailability->update([
+            'day_of_week' => $data['day_of_week'],
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
+        ]);
+
+        return back()->with('success', 'Jadwal berhasil diperbarui.');
+    }
+
     public function destroy(TutorAvailability $tutorAvailability)
     {
         $tutor = Auth::user()->tutor;
