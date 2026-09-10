@@ -14,6 +14,7 @@ use App\Http\Controllers\Teacher\ScheduleController;
 use App\Http\Controllers\Teacher\SubjectController;
 use App\Http\Controllers\Teacher\WithdrawController;
 use App\Http\Controllers\TutorMarketplaceController;
+use App\Http\Controllers\Student\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 // ============================
@@ -65,14 +66,16 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', function () {
         $orders = auth()->user()->ordersAsStudent()
-            ->with(['tutor.user', 'tutorSubject.subject'])
-            ->latest()
-            ->paginate(10);
+    ->with(['tutor.user', 'tutorSubject.subject', 'review'])
+    ->latest()
+    ->paginate(10);
 
         return view('student.dashboard', compact('orders'));
     })->name('dashboard');
 
     Route::post('/orders/{order}/confirm', [StudentOrderController::class, 'confirm'])->name('orders.confirm');
+    Route::get('/orders/{order}/review', [ReviewController::class, 'create'])->name('orders.review.create');
+    Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('orders.review.store');
 });
 
 // ============================
@@ -139,4 +142,4 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::post('/{tutor}/approve', [TutorVerificationController::class, 'approve'])->name('.approve');
         Route::post('/{tutor}/reject', [TutorVerificationController::class, 'reject'])->name('.reject');
     });
-}); 
+});

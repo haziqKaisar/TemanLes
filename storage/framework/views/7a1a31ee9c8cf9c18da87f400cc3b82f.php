@@ -38,11 +38,11 @@
 
     <?php
         $labels = [
-            'pending_payment' => 'Menunggu Bayar', 
+            'pending_payment' => 'Menunggu Bayar',
             'waiting_verification' => 'Diverifikasi',
-            'confirmed' => 'Terkonfirmasi', 
+            'confirmed' => 'Terkonfirmasi',
             'completed' => 'Selesai',
-            'cancelled' => 'Dibatalkan', 
+            'cancelled' => 'Dibatalkan',
             'rejected' => 'Ditolak',
         ];
     ?>
@@ -90,24 +90,32 @@
 
                             </span>
                         </td>
-                        <td class="px-5 py-4">
+                        <td class="px-4 py-3">
                             <?php if($order->status === 'confirmed' && !$order->student_confirmed_at): ?>
                                 <?php if($order->scheduled_at->isPast()): ?>
                                     <form method="POST" action="<?php echo e(route('student.orders.confirm', $order)); ?>" onsubmit="return confirm('Konfirmasi bahwa les sudah dilaksanakan?')">
                                         <?php echo csrf_field(); ?>
-                                        <button type="submit" class="bg-[#093C5D] text-[#5DF8D8] px-3.5 py-1.5 rounded-lg text-xs font-bold hover:bg-[#3B7597] hover:text-white transition-all shadow-sm focus-visible:outline-none">
+                                        <button type="submit" class="bg-board text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-board-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board">
                                             Konfirmasi selesai
                                         </button>
                                     </form>
                                 <?php else: ?>
-                                    <span class="text-xs text-[#3B7597] font-medium bg-[#6FD1D7]/20 px-2.5 py-1 rounded-lg">Belum Mulai</span>
+                                    <span class="text-xs text-ink-muted">Bisa dikonfirmasi setelah jadwal</span>
                                 <?php endif; ?>
-                            <?php elseif($order->status === 'confirmed' && $order->student_confirmed_at): ?>
-                                <span class="text-xs text-[#3B7597] font-semibold italic">Menunggu konfirmasi guru</span>
-                            <?php elseif($order->status === 'completed'): ?>
-                                <span class="text-xs text-[#093C5D] font-bold bg-[#5DF8D8] px-2.5 py-1 rounded-lg">Selesai ✓</span>
+                            <?php elseif($order->student_confirmed_at): ?>
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-xs <?php echo e($order->status === 'completed' ? 'text-success font-medium' : 'text-ink-muted'); ?>">
+                                        <?php echo e($order->status === 'completed' ? 'Selesai ✓' : 'Menunggu konfirmasi guru'); ?>
+
+                                    </span>
+                                    <?php if($order->review): ?>
+                                        <span class="text-xs text-ink-muted">★ Ulasan terkirim (<?php echo e($order->review->rating); ?>/5)</span>
+                                    <?php else: ?>
+                                        <a href="<?php echo e(route('student.orders.review.create', $order)); ?>" class="text-xs font-medium text-board hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board rounded">Beri ulasan</a>
+                                    <?php endif; ?>
+                                </div>
                             <?php else: ?>
-                                <span class="text-xs text-[#3B7597]">—</span>
+                                <span class="text-xs text-ink-muted">—</span>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -154,15 +162,20 @@
 
                 </p>
 
-                <?php if($order->status === 'confirmed' && !$order->student_confirmed_at && $order->scheduled_at->isPast()): ?>
+                 <?php if($order->status === 'confirmed' && !$order->student_confirmed_at && $order->scheduled_at->isPast()): ?>
                     <form method="POST" action="<?php echo e(route('student.orders.confirm', $order)); ?>" onsubmit="return confirm('Konfirmasi bahwa les sudah dilaksanakan?')">
                         <?php echo csrf_field(); ?>
-                        <button type="submit" class="w-full bg-[#093C5D] text-[#5DF8D8] py-2.5 rounded-lg text-xs font-bold hover:bg-[#3B7597] transition-all shadow-sm">
-                            Konfirmasi Selesai
-                        </button>
+                        <button type="submit" class="w-full bg-board text-white py-2 rounded-lg text-xs font-medium">Konfirmasi selesai</button>
                     </form>
-                <?php elseif($order->status === 'confirmed' && $order->student_confirmed_at): ?>
-                    <p class="text-xs text-[#3B7597] font-medium bg-[#6FD1D7]/20 p-2 rounded-lg text-center italic">Menunggu konfirmasi guru</p>
+                <?php elseif($order->student_confirmed_at): ?>
+                    <div class="flex items-center justify-between">
+                        <p class="text-xs text-ink-muted"><?php echo e($order->status === 'completed' ? 'Selesai ✓' : 'Menunggu konfirmasi guru'); ?></p>
+                        <?php if($order->review): ?>
+                            <span class="text-xs text-ink-muted">★ <?php echo e($order->review->rating); ?>/5</span>
+                        <?php else: ?>
+                            <a href="<?php echo e(route('student.orders.review.create', $order)); ?>" class="text-xs font-medium text-board hover:underline">Beri ulasan</a>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -182,4 +195,5 @@
 <?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
 <?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
 <?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
-<?php endif; ?><?php /**PATH C:\laragon\www\TemanLes\resources\views/student/dashboard.blade.php ENDPATH**/ ?>
+<?php endif; ?>
+<?php /**PATH C:\laragon\www\TemanLes\resources\views/student/dashboard.blade.php ENDPATH**/ ?>

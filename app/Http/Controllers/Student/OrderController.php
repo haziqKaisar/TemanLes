@@ -19,6 +19,6 @@ class OrderController extends Controller
             ? "Pesanan {$order->order_code} sudah selesai. Terima kasih sudah konfirmasi!"
             : 'Konfirmasi kamu tersimpan. Menunggu konfirmasi dari guru.';
 
-        return back()->with('success', $message);
+        return redirect()->route('student.orders.review.create', $order)->with('success', $message);
     }
 }
