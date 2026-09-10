@@ -15,6 +15,7 @@ use App\Http\Controllers\Teacher\SubjectController;
 use App\Http\Controllers\Teacher\WithdrawController;
 use App\Http\Controllers\TutorMarketplaceController;
 use App\Http\Controllers\Student\ReviewController;
+use App\Http\Controllers\TutorProfileController;
 use Illuminate\Support\Facades\Route;
 
 // ============================
@@ -42,6 +43,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/marketplace', [TutorMarketplaceController::class, 'index'])->name('marketplace');
 
+    // Dikeluarkan dari prefix booking agar URL valid (/tutors/{tutor})
+    Route::get('/tutors/{tutor}', [TutorProfileController::class, 'show'])->name('tutors.show');
+
+    // Group khusus alur booking
     Route::prefix('tutors/{tutor}/booking')->name('booking.')->group(function () {
         Route::get('/step-1', [BookingController::class, 'step1'])->name('step1');
         Route::post('/step-1', [BookingController::class, 'storeStep1'])->name('step1.store');
@@ -53,13 +58,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/confirm', [BookingController::class, 'confirm'])->name('confirm');
     });
 
+    // Group khusus payment
     Route::prefix('orders/{order}')->name('payment.')->group(function () {
         Route::get('/payment', [PaymentController::class, 'create'])->name('create');
         Route::post('/payment', [PaymentController::class, 'store'])->name('store');
         Route::get('/success', [PaymentController::class, 'success'])->name('success');
     });
-});
 
+}); // <-- Penutup ini sebelumnya terlewat
 // ============================
 // STUDENT
 // ============================

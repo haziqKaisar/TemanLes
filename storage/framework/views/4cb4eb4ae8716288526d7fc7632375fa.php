@@ -113,9 +113,9 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <?php $__empty_1 = true; $__currentLoopData = $tutors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tutor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <?php $minPrice = $tutor->tutorSubjects->min('price_per_hour'); ?>
-            <a href="<?php echo e(route('booking.step1', $tutor)); ?>"
-                class="group bg-white border border-gray-200 hover:border-[#3B7597] hover:shadow-md transition-all rounded-2xl p-5 block relative overflow-hidden">
-                
+            <a href="<?php echo e(route('tutors.show', $tutor)); ?>"
+    class="group bg-white border border-line hover:border-board hover:shadow-md hover:-translate-y-0.5 rounded-2xl p-5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-board block">
+
                 <div class="flex items-start gap-3 mb-3">
                     <div class="w-10 h-10 shrink-0 rounded-full bg-[#093C5D] flex items-center justify-center font-display font-bold text-white text-sm" aria-hidden="true">
                         <?php echo e(substr($tutor->user->name, 0, 1)); ?>
@@ -178,4 +178,5 @@
 <?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
 <?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
 <?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
-<?php endif; ?><?php /**PATH C:\laragon\www\TemanLes\resources\views/marketplace/index.blade.php ENDPATH**/ ?>
+<?php endif; ?>
+<?php /**PATH C:\laragon\www\TemanLes\resources\views/marketplace/index.blade.php ENDPATH**/ ?>
